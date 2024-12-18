@@ -11,13 +11,7 @@ const encrypt = (password)=>{
     return {iv:iv.toString("hex"),password:encryptedPassword.toString("hex"),};
 }
 
-// const decrypt = (encryption)=>{
-//     const decipher = crypto.createDecipheriv('aes-256-ctr',Buffer.from(encryption.iv),iv);
-//     const decryptedPassword = Buffer.concat([
-//         decipher.update(encryption.password),decipher.final(),
-//     ]);
-//     return decryptedPassword.toString();
-// }
+
 const decrypt = (encryption) => {
     const iv = Buffer.from(encryption.iv, 'hex'); // Ensure iv is in buffer format
     const decipher = crypto.createDecipheriv('aes-256-ctr', Buffer.from(secret), iv);
