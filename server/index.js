@@ -4,9 +4,16 @@ const mysql = require('mysql');
 const PORT = 3001;
 const cors = require('cors');
 const {encrypt,decrypt} = require('./EncryptionHandler.js');
+const userRoutes = require('./routes/user.routes.js');
+const dotenv = require('dotenv');
+dotenv.config();
+const cookieParser = require('cookie-parser');
+
+const connectToDb = require('./db/db.js');
+connectToDb();
 app.use(cors());
 app.use(express.json());
-
+app.use(cookieParser());
 
 const db = mysql.createConnection({
     user: 'root',
@@ -18,6 +25,8 @@ const db = mysql.createConnection({
 app.get('/',(req,res)=>{
     res.send("Yes");
 })
+
+app.use('/users',userRoutes);
 
 app.post('/addPassword',(req,res)=>{
     const {password,title} = req.body;
